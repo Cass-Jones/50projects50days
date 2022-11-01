@@ -30,7 +30,7 @@ body {
   position: relative;
   margin-bottom: 30px;
   max-width: 100%;
-  width: 350px;
+  width: 750px;
 }
 
 .progress-container::before {
@@ -61,8 +61,8 @@ body {
   background-color: azure;
   color: gray;
   border-radius: 50%;
-  height: 30px;
-  width: 30px;
+  height: 100px;
+  width: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
