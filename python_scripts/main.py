@@ -24,7 +24,7 @@ def create_template():
         createSubDirectories(['CSS', 'JS'],  path)
         create_files(path)
     
-    runGitCommands()
+    runGitCommands(folder_name)
 
 
 def check_directory(file_path: str):
@@ -34,8 +34,37 @@ def createSubDirectories(dirs: list, root_folder: str):
     for dir in dirs:
         os.mkdir(f'{root_folder}/{dir}')
 
-def runGitCommands():
-    print('Git commands')
+def runGitCommands(folder_name: str):
+    command_valid = False
+    while not command_valid:
+        push_to_git = input('Do you want to push this directory to git?\n[Y]es / [N]o \n')
+        if push_to_git == 'Y':
+            command_valid = True
+
+            print('Pushing to git...')
+
+            git_add = os.system(f'git add {folder_name}')
+            if git_add == 0:
+                valid_commit_message = False
+                while not valid_commit_message:
+                    commit_message = input('Enter a commit message')
+                    if len(commit_message) > 50 or len(commit_message)<1:
+                        print("Commit message must be between 1 and 50 characters")
+                    else: valid_commit_message = True
+                commit_success = os.system(f'git commit -m "{commit_message}"')
+                if commit_success == 0:
+                    print('Pushing to Origin Master')
+                    master_success = os.system('git push origin master')
+
+                else: print('Git commit was unsuccessful.')
+                if master_success == 0:
+                    print('Push to Origin Master was successful!')
+                else: print(f'Push to Origin Master failed with code : {master_success}')
+        elif push_to_git == 'N':
+            command_valid = True
+            print('Dir was not pushed to git.')
+        else:
+            print('Please enter Y or N to complete the command.')
 
 
 def create_files(file_path: str):
